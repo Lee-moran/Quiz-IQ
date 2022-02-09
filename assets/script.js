@@ -43,3 +43,54 @@ function showQuestion(question) {
     });
 
 }
+
+function resetState(){
+    nextButton.classList.add('hide');
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild
+        (answerButtonsElement.firstChild);
+    }
+
+}
+
+function selectAnswer(e) {
+    const selectedButton = e.target
+    const correct = selectedButton.dataset.correct;
+    setStatusClass(document.body, correct);
+    Array.from(answerButtonsElement.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct);
+    });
+    nextButton.classList.remove('hide');
+    
+    if (shuffledQuestions.lenght > currentQuestionIndex + 1) {
+        nextButton.classList.remove('hide');
+
+
+    } else {
+        startButton.innerText = 'Restart';
+        startButton.classList.remove('hide');
+
+    }
+    
+}
+
+function setStatusClass(element, correct) {
+    clearStatusClass(element);
+    if (correct) {
+        element.classList.add('correct');
+        incrementScore();
+    } else {
+        element.classList.add('wrong');
+    }
+}
+
+function incrementScore() {
+    let oldScore = parseInt(document.getElementById('correct').innerText);
+    document.getElementById('correct').innerText = ++oldScore;
+}
+
+function clearStatusClass(element){
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
+
+}
